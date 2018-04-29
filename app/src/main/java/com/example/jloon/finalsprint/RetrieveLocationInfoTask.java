@@ -41,8 +41,12 @@ public class RetrieveLocationInfoTask extends AsyncTask<URL, String, String> {
             JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
             JsonObject rootobj = root.getAsJsonObject(); //May be an array, may be an object.
             JsonArray infoArray = rootobj.getAsJsonArray("geonames");
+            try{
+                this.summary = infoArray.get(0).getAsJsonObject().get("summary").getAsString();
+            }catch (RuntimeException re){
+                this.summary = "Invalid Input for location. Please input the name of city or state.";
+            }
 
-            this.summary = infoArray.get(0).getAsJsonObject().get("summary").getAsString();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,7 +62,7 @@ public class RetrieveLocationInfoTask extends AsyncTask<URL, String, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        this.view.setText("Summary of: " + this.location + " is " + this.summary);
+        this.view.setText(this.location + " is " + this.summary);
     }
 
     public String getSummary() {
