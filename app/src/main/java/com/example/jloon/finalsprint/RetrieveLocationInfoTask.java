@@ -19,6 +19,17 @@ import java.util.ArrayList;
 public class RetrieveLocationInfoTask extends AsyncTask<URL, String, String> {
 
     private String summary;
+    private TextView view;
+    private String location;
+
+
+    public RetrieveLocationInfoTask(TextView view, String location) {
+        super();
+        this.view = view;
+        this.location = location;
+    }
+
+
     @Override
     protected String doInBackground(URL... urls) {
         HttpURLConnection request = null;
@@ -37,7 +48,7 @@ public class RetrieveLocationInfoTask extends AsyncTask<URL, String, String> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return summary;
+        return this.summary;
     }
 
     @Override
@@ -48,6 +59,7 @@ public class RetrieveLocationInfoTask extends AsyncTask<URL, String, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        this.view.setText("Summary of: " + this.location + " is " + this.summary);
     }
 
     public String getSummary() {

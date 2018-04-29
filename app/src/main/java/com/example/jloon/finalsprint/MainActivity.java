@@ -32,11 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
                 URL url = this.buildSearchQuery(location);
 
-                RetrieveLocationInfoTask task = new RetrieveLocationInfoTask();
+                RetrieveLocationInfoTask task = new RetrieveLocationInfoTask(locationFacts, location);
                 task.execute(url);
 
-                String summary = task.getSummary();
-                locationFacts.setText("Summary of: " + location + " is " + summary);
+
             }
 
             private URL buildSearchQuery(String location) {
