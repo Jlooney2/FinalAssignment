@@ -29,7 +29,6 @@ public class RetrieveLocationInfoTask extends AsyncTask<URL, String, String> {
         this.location = location;
     }
 
-
     @Override
     protected String doInBackground(URL... urls) {
         HttpURLConnection request = null;
