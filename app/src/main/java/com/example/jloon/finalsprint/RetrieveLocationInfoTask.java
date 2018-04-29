@@ -19,8 +19,6 @@ import java.util.ArrayList;
 public class RetrieveLocationInfoTask extends AsyncTask<URL, String, String> {
 
     private String summary;
-    private  int count = 0;
-    private ArrayList<Object> infoCollection;
     @Override
     protected String doInBackground(URL... urls) {
         HttpURLConnection request = null;
@@ -34,17 +32,7 @@ public class RetrieveLocationInfoTask extends AsyncTask<URL, String, String> {
             JsonObject rootobj = root.getAsJsonObject(); //May be an array, may be an object.
             JsonArray infoArray = rootobj.getAsJsonArray("geonames");
 
-            this.infoCollection = new ArrayList<Object>();
-            for(Object curr : infoArray){
-                this.infoCollection.add(curr.toString());
-            }
-            StringBuilder info = new StringBuilder();
-            for (Object curr: this.infoCollection){
-                info.append(curr + System.lineSeparator());
-            }
-
-            summary = info.toString();
-            System.out.println(summary);
+            this.summary = infoArray.get(0).getAsJsonObject().get("summary").getAsString();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,12 +51,7 @@ public class RetrieveLocationInfoTask extends AsyncTask<URL, String, String> {
     }
 
     public String getSummary() {
-        if (this.summary != null) {
-            return this.summary;
-        } else {
-            count++;
-            return "Population null" + count;
-        }
+        return this.summary;
 
     }
 
