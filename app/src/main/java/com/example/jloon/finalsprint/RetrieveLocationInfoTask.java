@@ -62,7 +62,7 @@ public class RetrieveLocationInfoTask extends AsyncTask<URL, String, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        this.view.setText(this.location + " is " + this.summary);
+        this.view.setText(this.summary);
     }
 
     public String getSummary() {
