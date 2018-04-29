@@ -8,8 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity {
     private static final String USERNAME = "finalassignment";
@@ -41,9 +43,11 @@ public class MainActivity extends AppCompatActivity {
             private URL buildSearchQuery(String location) {
                 URL query = null;
                 try {
-                    query = new URL("http://api.geonames.org/wikipediaSearchJSON?q=" + location + "&maxRows=10&username=" + USERNAME);
-                } catch (MalformedURLException e) {
+                    query = new URL("http://api.geonames.org/wikipediaSearchJSON?q=" + URLEncoder.encode(location, "UTF-8") + "&maxRows=10&username=" + USERNAME);
+                } catch (MalformedURLException e ) {
                     e.printStackTrace();
+                }catch (UnsupportedEncodingException uee){
+
                 }
 
 
