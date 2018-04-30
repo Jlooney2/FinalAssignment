@@ -41,20 +41,6 @@ public class MainActivity extends AppCompatActivity {
         adapter = new CustomAdapter(data);
         recyclerView.setAdapter(adapter);
 
-
-        
-        EditText userInput = findViewById(R.id.keyword_input);
-
-        userInput.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                data.clear();
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-
-
         Button getInfoButton = findViewById(R.id.btnGetInfo);
         getInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,15 +63,9 @@ public class MainActivity extends AppCompatActivity {
                 } catch (MalformedURLException e ) {
                     e.printStackTrace();
                 }catch (UnsupportedEncodingException uee){
-
                 }
-
                 return query;
             }
         });
-
-
     }
-
-
 }
