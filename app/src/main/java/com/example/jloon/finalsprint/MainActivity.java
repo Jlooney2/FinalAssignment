@@ -26,18 +26,10 @@ public class MainActivity extends AppCompatActivity {
     private static ArrayList<GeoLocation> data;
     private static RecyclerView.Adapter adapter;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-
-
         recyclerView = findViewById(R.id.myRecyclerView);
         recyclerView.setHasFixedSize(true);
 
@@ -46,22 +38,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         data = new ArrayList<GeoLocation>();
-        //for (int i = 0; i < 5; i++) {
-          //  data.add(new GeoLocation(
-            //       "Somewhere",
-              //     "over the rainbow."
-            //));
-        //}
-
         adapter = new CustomAdapter(data);
         recyclerView.setAdapter(adapter);
 
 
-
-        //ArrayList<GeoLocation> geoList = new ArrayList<>();
-        //ArrayAdapter adapter= new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, geoList);
-
-
+        
         EditText userInput = findViewById(R.id.keyword_input);
 
         userInput.setOnClickListener(new View.OnClickListener() {
@@ -82,24 +63,11 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
 
                 EditText userInput = findViewById(R.id.keyword_input);
-                //TextView locationFacts = findViewById(R.id.location_info);
-
                 String location = userInput.getText().toString();
-                //data = new ArrayList<GeoLocation>();
-                //adapter.notifyDataSetChanged();
                 URL url = this.buildSearchQuery(location);
 
                 RetrieveLocationInfoTask task = new RetrieveLocationInfoTask(data, adapter);
                 task.execute(url);
-
-                //data.add(new GeoLocation(
-                  //      "Something",
-                    //    "new."
-                //));
-
-                //adapter.notifyDataSetChanged();
-
-
             }
 
             private URL buildSearchQuery(String location) {
@@ -111,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
                 }catch (UnsupportedEncodingException uee){
 
                 }
-
 
                 return query;
             }

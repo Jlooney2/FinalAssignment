@@ -20,19 +20,15 @@ import java.util.ArrayList;
 public class RetrieveLocationInfoTask extends AsyncTask<URL, String, String> {
 
     private String summary;
-    //private TextView view;
     private ArrayList<GeoLocation> data;
     private RecyclerView.Adapter adapter;
-    //private String location;
 
 
     public RetrieveLocationInfoTask(ArrayList<GeoLocation> inData, RecyclerView.Adapter inAdapter) {
         super();
-        //this.view = view;
         this.data = inData;
         this.adapter = inAdapter;
-        //this.location = location;
-        
+
     }
 
     @Override
@@ -48,48 +44,22 @@ public class RetrieveLocationInfoTask extends AsyncTask<URL, String, String> {
             JsonObject rootobj = root.getAsJsonObject(); //May be an array, may be an object.
             JsonArray infoArray = rootobj.getAsJsonArray("geonames");
 
-            try{
-                for  (JsonElement current : infoArray){
 
-                    String stringOne = current.getAsJsonObject().get("title").getAsString();
-                    String stringTwo = current.getAsJsonObject().get("summary").getAsString();
-                    this.data.add(new GeoLocation(stringOne, stringTwo));
+            for  (JsonElement current : infoArray){
 
-                }
-            }catch (RuntimeException re){
-                //this.data.clear();
-                this.data.add(new GeoLocation("Sorry", "Invalid Input for location. Please input the name of city or state."));
-                //adapter.notifyDataSetChanged();
-                //his.summary = "Invalid Input for location. Please input the name of city or state.";
+                String stringOne = current.getAsJsonObject().get("title").getAsString();
+                String stringTwo = current.getAsJsonObject().get("summary").getAsString();
+                this.data.add(new GeoLocation(stringOne, stringTwo));
+
             }
-            //for  (JsonElement current : infoArray){
-
-            //    try{
-            //        String stringOne = current.getAsJsonObject().get("title").getAsString();
-            //        String stringTwo = current.getAsJsonObject().get("summary").getAsString();
-            //        this.data.add(new GeoLocation(stringOne, stringTwo));
-            //    }catch (RuntimeException re){
-                    //this.data.clear();
-            //        this.data.add(new GeoLocation("Sorry", "Invalid Input for location. Please input the name of city or state."));
-                    //adapter.notifyDataSetChanged();
-                    //his.summary = "Invalid Input for location. Please input the name of city or state.";
-            //    }
-
-            //}
-
-            //try{
-                //this.summary = infoArray.get(0).getAsJsonObject().get("summary").getAsString();
-            //}catch (RuntimeException re){
-              //  this.summary = "Invalid Input for location. Please input the name of city or state.";
-            //}
-
 
         } catch (IOException e) {
             e.printStackTrace();
-
-            //this.data.clear();
             this.data.add(new GeoLocation("Sorry", "Invalid Input for location. Please input the name of city or state."));
-            //adapter.notifyDataSetChanged();
+        }
+
+        if(this.data.size() == 0){
+            this.data.add(new GeoLocation("Sorry", "Invalid Input for location. Please input the name of city or state."));
         }
         return this.summary;
     }
@@ -102,13 +72,8 @@ public class RetrieveLocationInfoTask extends AsyncTask<URL, String, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        //this.view.setText(this.summary);
         adapter.notifyDataSetChanged();
     }
 
-    public String getSummary() {
-        return this.summary;
-
-    }
 
 }
